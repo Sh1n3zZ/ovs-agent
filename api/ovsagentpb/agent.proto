@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package ovsagentpb;
+
+option go_package = "github.com/Sh1n3zZ/ovs-agent/api/ovsagentpb";
+
+// ListFlowsRequest is the request message for querying ovs flows.
+// bridge is the name of the OVS bridge to inspect.
+// table, cookie and match_expr are optional filters, corresponding to
+// OpenFlow match fields (e.g. "table=1,cookie=0x1234/0xffff").
+message ListFlowsRequest {
+  string bridge = 1;
+
+  // Optional table number to filter flows.
+  uint32 table = 2;
+
+  // Optional cookie value to filter flows.
+  uint64 cookie = 3;
+
+  // Optional raw OpenFlow match expression for advanced filters.
+  string match_expr = 4;
+}
+
+// Flow represents a single ovs flow entry in a human-readable form.
+// raw is typically the string returned by "ovs-ofctl dump-flows".
+message Flow {
+  string raw = 1;
+}
+
+// ListFlowsResponse is the response message containing the list of flows.
+message ListFlowsResponse {
+  repeated Flow flows = 1;
+}
+
+// OVSAgent defines RPCs for interacting with Open vSwitch.
+service OVSAgent {
+  // ListFlows queries ovs flows for a specific bridge, with optional filters.
+  rpc ListFlows(ListFlowsRequest) returns (ListFlowsResponse);
+}

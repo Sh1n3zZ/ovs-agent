@@ -1,0 +1,27 @@
+APP_ENV: development
+SERVER_ADDRESS: :8080
+CONTEXT_TIMEOUT: 30
+DB_HOST: localhost
+DB_PORT: 5432
+DB_USER: postgres
+DB_PASS: password
+DB_NAME: light_ve_financial
+ACCESS_TOKEN_EXPIRY_HOUR: 24
+REFRESH_TOKEN_EXPIRY_HOUR: 168
+ACCESS_TOKEN_SECRET: your-access-token-secret
+REFRESH_TOKEN_SECRET: your-refresh-token-secret
+# Base URL for payment callback (e.g. https://api.example.com). Used to build notify URL for payment channels.
+PAYMENT_NOTIFY_BASE_URL: https://api.example.com
+# WeChat Pay (Native payment)
+WECHAT_PAY_MCH_ID: ""
+WECHAT_PAY_APP_ID: ""
+WECHAT_PAY_MCH_CERT_SERIAL_NO: ""
+WECHAT_PAY_MCH_API_V3_KEY: ""
+WECHAT_PAY_PRIVATE_KEY_PATH: "./cert/payment_cert.pem"
+
+# RocketMQ
+ROCKETMQ_ENDPOINT: "127.0.0.1:8081"
+ROCKETMQ_ACCESS_KEY: ""
+ROCKETMQ_SECRET_KEY: ""
+ROCKETMQ_TOPIC: "light-ve-financial"
+ROCKETMQ_CONSUMER_GROUP: "light-ve-financial-consumer-group"
