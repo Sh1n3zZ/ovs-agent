@@ -11,6 +11,7 @@ type Env struct {
 	AppEnv         string `yaml:"APP_ENV"`
 	ServerAddress  string `yaml:"SERVER_ADDRESS"`
 	ContextTimeout int    `yaml:"CONTEXT_TIMEOUT"`
+	APISecret      string `yaml:"API_SECRET"`
 }
 
 func NewConfig() *Env {
@@ -24,6 +25,10 @@ func NewConfig() *Env {
 	err = yaml.Unmarshal(data, &env)
 	if err != nil {
 		log.Fatal("Environment can't be loaded: ", err)
+	}
+
+	if env.APISecret == "" {
+		log.Fatal("API_SECRET must be set in config.yaml")
 	}
 
 	if env.AppEnv == "development" {

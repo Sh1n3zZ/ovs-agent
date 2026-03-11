@@ -32,15 +32,14 @@ func (s *ovsAgentServer) ListFlows(ctx context.Context, req *ovsagentpb.ListFlow
 
 	// When no filters are provided, list all flows on the bridge.
 	if req.GetTable() == 0 && req.GetCookie() == 0 && req.GetMatchExpr() == "" {
-		flows, err := serverovs.ListBridgeFlows(s.ovsClient, req.GetBridge())
+		rawFlows, err := serverovs.ListBridgeFlows(s.ovsClient, req.GetBridge())
 		if err != nil {
 			return nil, fmt.Errorf("list bridge flows: %w", err)
 		}
 
 		resp := &ovsagentpb.ListFlowsResponse{}
-		for _, f := range flows {
-			// Use String representation as the raw flow output.
-			resp.Flows = append(resp.Flows, &ovsagentpb.Flow{Raw: fmt.Sprint(f)})
+		for _, raw := range rawFlows {
+			resp.Flows = append(resp.Flows, &ovsagentpb.Flow{Raw: raw})
 		}
 		return resp, nil
 	}
@@ -63,14 +62,14 @@ func (s *ovsAgentServer) ListFlows(ctx context.Context, req *ovsagentpb.ListFlow
 	// NOTE: Advanced raw match_expr from the request is not parsed here.
 	// If you need full support, extend this to parse req.MatchExpr into MatchFlow.Matches.
 
-	flows, err := serverovs.ListBridgeFlowsWithMatchArgs(s.ovsClient, req.GetBridge(), matchFlow)
+	rawFlows, err := serverovs.ListBridgeFlowsWithMatchArgs(s.ovsClient, req.GetBridge(), matchFlow)
 	if err != nil {
 		return nil, fmt.Errorf("list bridge flows with match args: %w", err)
 	}
 
 	resp := &ovsagentpb.ListFlowsResponse{}
-	for _, f := range flows {
-		resp.Flows = append(resp.Flows, &ovsagentpb.Flow{Raw: fmt.Sprint(f)})
+	for _, raw := range rawFlows {
+		resp.Flows = append(resp.Flows, &ovsagentpb.Flow{Raw: raw})
 	}
 
 	return resp, nil
