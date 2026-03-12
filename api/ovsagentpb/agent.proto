@@ -32,8 +32,52 @@ message ListFlowsResponse {
   repeated Flow flows = 1;
 }
 
+// InstallStaticARPBindingRequest is the request message for installing a static ARP binding.
+message InstallStaticARPBindingRequest {
+  // Name of the OVS bridge.
+  string bridge = 1;
+
+  // Input port on which ARP packets are received.
+  uint32 in_port = 2;
+
+  // IPv4 address for the ARP SPA (e.g. "192.168.1.100").
+  string ip = 3;
+
+  // MAC address for the ARP SHA (e.g. "aa:bb:cc:dd:ee:01").
+  string mac = 4;
+}
+
+// InstallStaticARPBindingResponse contains textual representations of the installed flows.
+message InstallStaticARPBindingResponse {
+  repeated Flow flows = 1;
+}
+
+// RemoveStaticARPBindingRequest is the request message for removing a static ARP binding.
+message RemoveStaticARPBindingRequest {
+  // Name of the OVS bridge.
+  string bridge = 1;
+
+  // Input port on which ARP packets are received.
+  uint32 in_port = 2;
+
+  // IPv4 address for the ARP SPA (e.g. "192.168.1.100").
+  string ip = 3;
+
+  // MAC address for the ARP SHA (e.g. "aa:bb:cc:dd:ee:01").
+  string mac = 4;
+}
+
+// RemoveStaticARPBindingResponse is an empty response for successful removal.
+message RemoveStaticARPBindingResponse {}
+
 // OVSAgent defines RPCs for interacting with Open vSwitch.
 service OVSAgent {
   // ListFlows queries ovs flows for a specific bridge, with optional filters.
   rpc ListFlows(ListFlowsRequest) returns (ListFlowsResponse);
+
+  // InstallStaticARPBinding installs static ARP binding flows for a given (bridge, in_port, ip, mac).
+  rpc InstallStaticARPBinding(InstallStaticARPBindingRequest) returns (InstallStaticARPBindingResponse);
+
+  // RemoveStaticARPBinding removes static ARP binding flows for a given (bridge, in_port, ip, mac).
+  rpc RemoveStaticARPBinding(RemoveStaticARPBindingRequest) returns (RemoveStaticARPBindingResponse);
 }

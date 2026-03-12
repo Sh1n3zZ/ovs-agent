@@ -7,6 +7,7 @@ import (
 	ovsclient "github.com/digitalocean/go-openvswitch/ovs"
 
 	"github.com/Sh1n3zZ/ovs-agent/api/ovsagentpb"
+	serverflows "github.com/Sh1n3zZ/ovs-agent/server/flows"
 	serverovs "github.com/Sh1n3zZ/ovs-agent/server/ovs"
 )
 
@@ -73,4 +74,62 @@ func (s *ovsAgentServer) ListFlows(ctx context.Context, req *ovsagentpb.ListFlow
 	}
 
 	return resp, nil
+}
+
+// InstallStaticARPBinding handles the InstallStaticARPBinding RPC and delegates
+// to the higher-level flows.InstallStaticARPBinding helper.
+func (s *ovsAgentServer) InstallStaticARPBinding(ctx context.Context, req *ovsagentpb.InstallStaticARPBindingRequest) (*ovsagentpb.InstallStaticARPBindingResponse, error) {
+	if req.GetBridge() == "" {
+		return nil, fmt.Errorf("bridge must be specified")
+	}
+	if req.GetIp() == "" {
+		return nil, fmt.Errorf("ip must be specified")
+	}
+	if req.GetMac() == "" {
+		return nil, fmt.Errorf("mac must be specified")
+	}
+
+	rawFlows, err := serverflows.InstallStaticARPBinding(
+		s.ovsClient,
+		req.GetBridge(),
+		int(req.GetInPort()),
+		req.GetIp(),
+		req.GetMac(),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("install static arp binding: %w", err)
+	}
+
+	resp := &ovsagentpb.InstallStaticARPBindingResponse{}
+	for _, raw := range rawFlows {
+		resp.Flows = append(resp.Flows, &ovsagentpb.Flow{Raw: raw})
+	}
+
+	return resp, nil
+}
+
+// RemoveStaticARPBinding handles the RemoveStaticARPBinding RPC and delegates
+// to the higher-level flows.RemoveStaticARPBinding helper.
+func (s *ovsAgentServer) RemoveStaticARPBinding(ctx context.Context, req *ovsagentpb.RemoveStaticARPBindingRequest) (*ovsagentpb.RemoveStaticARPBindingResponse, error) {
+	if req.GetBridge() == "" {
+		return nil, fmt.Errorf("bridge must be specified")
+	}
+	if req.GetIp() == "" {
+		return nil, fmt.Errorf("ip must be specified")
+	}
+	if req.GetMac() == "" {
+		return nil, fmt.Errorf("mac must be specified")
+	}
+
+	if err := serverflows.RemoveStaticARPBinding(
+		s.ovsClient,
+		req.GetBridge(),
+		int(req.GetInPort()),
+		req.GetIp(),
+		req.GetMac(),
+	); err != nil {
+		return nil, fmt.Errorf("remove static arp binding: %w", err)
+	}
+
+	return &ovsagentpb.RemoveStaticARPBindingResponse{}, nil
 }

@@ -19,7 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OVSAgent_ListFlows_FullMethodName = "/ovsagentpb.OVSAgent/ListFlows"
+	OVSAgent_ListFlows_FullMethodName               = "/ovsagentpb.OVSAgent/ListFlows"
+	OVSAgent_InstallStaticARPBinding_FullMethodName = "/ovsagentpb.OVSAgent/InstallStaticARPBinding"
+	OVSAgent_RemoveStaticARPBinding_FullMethodName  = "/ovsagentpb.OVSAgent/RemoveStaticARPBinding"
 )
 
 // OVSAgentClient is the client API for OVSAgent service.
@@ -30,6 +32,10 @@ const (
 type OVSAgentClient interface {
 	// ListFlows queries ovs flows for a specific bridge, with optional filters.
 	ListFlows(ctx context.Context, in *ListFlowsRequest, opts ...grpc.CallOption) (*ListFlowsResponse, error)
+	// InstallStaticARPBinding installs static ARP binding flows for a given (bridge, in_port, ip, mac).
+	InstallStaticARPBinding(ctx context.Context, in *InstallStaticARPBindingRequest, opts ...grpc.CallOption) (*InstallStaticARPBindingResponse, error)
+	// RemoveStaticARPBinding removes static ARP binding flows for a given (bridge, in_port, ip, mac).
+	RemoveStaticARPBinding(ctx context.Context, in *RemoveStaticARPBindingRequest, opts ...grpc.CallOption) (*RemoveStaticARPBindingResponse, error)
 }
 
 type oVSAgentClient struct {
@@ -50,6 +56,26 @@ func (c *oVSAgentClient) ListFlows(ctx context.Context, in *ListFlowsRequest, op
 	return out, nil
 }
 
+func (c *oVSAgentClient) InstallStaticARPBinding(ctx context.Context, in *InstallStaticARPBindingRequest, opts ...grpc.CallOption) (*InstallStaticARPBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(InstallStaticARPBindingResponse)
+	err := c.cc.Invoke(ctx, OVSAgent_InstallStaticARPBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *oVSAgentClient) RemoveStaticARPBinding(ctx context.Context, in *RemoveStaticARPBindingRequest, opts ...grpc.CallOption) (*RemoveStaticARPBindingResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveStaticARPBindingResponse)
+	err := c.cc.Invoke(ctx, OVSAgent_RemoveStaticARPBinding_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OVSAgentServer is the server API for OVSAgent service.
 // All implementations must embed UnimplementedOVSAgentServer
 // for forward compatibility.
@@ -58,6 +84,10 @@ func (c *oVSAgentClient) ListFlows(ctx context.Context, in *ListFlowsRequest, op
 type OVSAgentServer interface {
 	// ListFlows queries ovs flows for a specific bridge, with optional filters.
 	ListFlows(context.Context, *ListFlowsRequest) (*ListFlowsResponse, error)
+	// InstallStaticARPBinding installs static ARP binding flows for a given (bridge, in_port, ip, mac).
+	InstallStaticARPBinding(context.Context, *InstallStaticARPBindingRequest) (*InstallStaticARPBindingResponse, error)
+	// RemoveStaticARPBinding removes static ARP binding flows for a given (bridge, in_port, ip, mac).
+	RemoveStaticARPBinding(context.Context, *RemoveStaticARPBindingRequest) (*RemoveStaticARPBindingResponse, error)
 	mustEmbedUnimplementedOVSAgentServer()
 }
 
@@ -70,6 +100,12 @@ type UnimplementedOVSAgentServer struct{}
 
 func (UnimplementedOVSAgentServer) ListFlows(context.Context, *ListFlowsRequest) (*ListFlowsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListFlows not implemented")
+}
+func (UnimplementedOVSAgentServer) InstallStaticARPBinding(context.Context, *InstallStaticARPBindingRequest) (*InstallStaticARPBindingResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method InstallStaticARPBinding not implemented")
+}
+func (UnimplementedOVSAgentServer) RemoveStaticARPBinding(context.Context, *RemoveStaticARPBindingRequest) (*RemoveStaticARPBindingResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RemoveStaticARPBinding not implemented")
 }
 func (UnimplementedOVSAgentServer) mustEmbedUnimplementedOVSAgentServer() {}
 func (UnimplementedOVSAgentServer) testEmbeddedByValue()                  {}
@@ -110,6 +146,42 @@ func _OVSAgent_ListFlows_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OVSAgent_InstallStaticARPBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InstallStaticARPBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OVSAgentServer).InstallStaticARPBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OVSAgent_InstallStaticARPBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OVSAgentServer).InstallStaticARPBinding(ctx, req.(*InstallStaticARPBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OVSAgent_RemoveStaticARPBinding_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveStaticARPBindingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OVSAgentServer).RemoveStaticARPBinding(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OVSAgent_RemoveStaticARPBinding_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OVSAgentServer).RemoveStaticARPBinding(ctx, req.(*RemoveStaticARPBindingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OVSAgent_ServiceDesc is the grpc.ServiceDesc for OVSAgent service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -120,6 +192,14 @@ var OVSAgent_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListFlows",
 			Handler:    _OVSAgent_ListFlows_Handler,
+		},
+		{
+			MethodName: "InstallStaticARPBinding",
+			Handler:    _OVSAgent_InstallStaticARPBinding_Handler,
+		},
+		{
+			MethodName: "RemoveStaticARPBinding",
+			Handler:    _OVSAgent_RemoveStaticARPBinding_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

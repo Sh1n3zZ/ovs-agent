@@ -187,6 +187,234 @@ func (x *ListFlowsResponse) GetFlows() []*Flow {
 	return nil
 }
 
+// InstallStaticARPBindingRequest is the request message for installing a static ARP binding.
+type InstallStaticARPBindingRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Name of the OVS bridge.
+	Bridge string `protobuf:"bytes,1,opt,name=bridge,proto3" json:"bridge,omitempty"`
+	// Input port on which ARP packets are received.
+	InPort uint32 `protobuf:"varint,2,opt,name=in_port,json=inPort,proto3" json:"in_port,omitempty"`
+	// IPv4 address for the ARP SPA (e.g. "192.168.1.100").
+	Ip string `protobuf:"bytes,3,opt,name=ip,proto3" json:"ip,omitempty"`
+	// MAC address for the ARP SHA (e.g. "aa:bb:cc:dd:ee:01").
+	Mac           string `protobuf:"bytes,4,opt,name=mac,proto3" json:"mac,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InstallStaticARPBindingRequest) Reset() {
+	*x = InstallStaticARPBindingRequest{}
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InstallStaticARPBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstallStaticARPBindingRequest) ProtoMessage() {}
+
+func (x *InstallStaticARPBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstallStaticARPBindingRequest.ProtoReflect.Descriptor instead.
+func (*InstallStaticARPBindingRequest) Descriptor() ([]byte, []int) {
+	return file_api_ovsagentpb_agent_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *InstallStaticARPBindingRequest) GetBridge() string {
+	if x != nil {
+		return x.Bridge
+	}
+	return ""
+}
+
+func (x *InstallStaticARPBindingRequest) GetInPort() uint32 {
+	if x != nil {
+		return x.InPort
+	}
+	return 0
+}
+
+func (x *InstallStaticARPBindingRequest) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+func (x *InstallStaticARPBindingRequest) GetMac() string {
+	if x != nil {
+		return x.Mac
+	}
+	return ""
+}
+
+// InstallStaticARPBindingResponse contains textual representations of the installed flows.
+type InstallStaticARPBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Flows         []*Flow                `protobuf:"bytes,1,rep,name=flows,proto3" json:"flows,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InstallStaticARPBindingResponse) Reset() {
+	*x = InstallStaticARPBindingResponse{}
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InstallStaticARPBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InstallStaticARPBindingResponse) ProtoMessage() {}
+
+func (x *InstallStaticARPBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InstallStaticARPBindingResponse.ProtoReflect.Descriptor instead.
+func (*InstallStaticARPBindingResponse) Descriptor() ([]byte, []int) {
+	return file_api_ovsagentpb_agent_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *InstallStaticARPBindingResponse) GetFlows() []*Flow {
+	if x != nil {
+		return x.Flows
+	}
+	return nil
+}
+
+// RemoveStaticARPBindingRequest is the request message for removing a static ARP binding.
+type RemoveStaticARPBindingRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Name of the OVS bridge.
+	Bridge string `protobuf:"bytes,1,opt,name=bridge,proto3" json:"bridge,omitempty"`
+	// Input port on which ARP packets are received.
+	InPort uint32 `protobuf:"varint,2,opt,name=in_port,json=inPort,proto3" json:"in_port,omitempty"`
+	// IPv4 address for the ARP SPA (e.g. "192.168.1.100").
+	Ip string `protobuf:"bytes,3,opt,name=ip,proto3" json:"ip,omitempty"`
+	// MAC address for the ARP SHA (e.g. "aa:bb:cc:dd:ee:01").
+	Mac           string `protobuf:"bytes,4,opt,name=mac,proto3" json:"mac,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveStaticARPBindingRequest) Reset() {
+	*x = RemoveStaticARPBindingRequest{}
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveStaticARPBindingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveStaticARPBindingRequest) ProtoMessage() {}
+
+func (x *RemoveStaticARPBindingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveStaticARPBindingRequest.ProtoReflect.Descriptor instead.
+func (*RemoveStaticARPBindingRequest) Descriptor() ([]byte, []int) {
+	return file_api_ovsagentpb_agent_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *RemoveStaticARPBindingRequest) GetBridge() string {
+	if x != nil {
+		return x.Bridge
+	}
+	return ""
+}
+
+func (x *RemoveStaticARPBindingRequest) GetInPort() uint32 {
+	if x != nil {
+		return x.InPort
+	}
+	return 0
+}
+
+func (x *RemoveStaticARPBindingRequest) GetIp() string {
+	if x != nil {
+		return x.Ip
+	}
+	return ""
+}
+
+func (x *RemoveStaticARPBindingRequest) GetMac() string {
+	if x != nil {
+		return x.Mac
+	}
+	return ""
+}
+
+// RemoveStaticARPBindingResponse is an empty response for successful removal.
+type RemoveStaticARPBindingResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RemoveStaticARPBindingResponse) Reset() {
+	*x = RemoveStaticARPBindingResponse{}
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RemoveStaticARPBindingResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveStaticARPBindingResponse) ProtoMessage() {}
+
+func (x *RemoveStaticARPBindingResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_ovsagentpb_agent_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveStaticARPBindingResponse.ProtoReflect.Descriptor instead.
+func (*RemoveStaticARPBindingResponse) Descriptor() ([]byte, []int) {
+	return file_api_ovsagentpb_agent_proto_rawDescGZIP(), []int{6}
+}
+
 var File_api_ovsagentpb_agent_proto protoreflect.FileDescriptor
 
 const file_api_ovsagentpb_agent_proto_rawDesc = "" +
@@ -202,9 +430,24 @@ const file_api_ovsagentpb_agent_proto_rawDesc = "" +
 	"\x04Flow\x12\x10\n" +
 	"\x03raw\x18\x01 \x01(\tR\x03raw\";\n" +
 	"\x11ListFlowsResponse\x12&\n" +
-	"\x05flows\x18\x01 \x03(\v2\x10.ovsagentpb.FlowR\x05flows2T\n" +
+	"\x05flows\x18\x01 \x03(\v2\x10.ovsagentpb.FlowR\x05flows\"s\n" +
+	"\x1eInstallStaticARPBindingRequest\x12\x16\n" +
+	"\x06bridge\x18\x01 \x01(\tR\x06bridge\x12\x17\n" +
+	"\ain_port\x18\x02 \x01(\rR\x06inPort\x12\x0e\n" +
+	"\x02ip\x18\x03 \x01(\tR\x02ip\x12\x10\n" +
+	"\x03mac\x18\x04 \x01(\tR\x03mac\"I\n" +
+	"\x1fInstallStaticARPBindingResponse\x12&\n" +
+	"\x05flows\x18\x01 \x03(\v2\x10.ovsagentpb.FlowR\x05flows\"r\n" +
+	"\x1dRemoveStaticARPBindingRequest\x12\x16\n" +
+	"\x06bridge\x18\x01 \x01(\tR\x06bridge\x12\x17\n" +
+	"\ain_port\x18\x02 \x01(\rR\x06inPort\x12\x0e\n" +
+	"\x02ip\x18\x03 \x01(\tR\x02ip\x12\x10\n" +
+	"\x03mac\x18\x04 \x01(\tR\x03mac\" \n" +
+	"\x1eRemoveStaticARPBindingResponse2\xb9\x02\n" +
 	"\bOVSAgent\x12H\n" +
-	"\tListFlows\x12\x1c.ovsagentpb.ListFlowsRequest\x1a\x1d.ovsagentpb.ListFlowsResponseB-Z+github.com/Sh1n3zZ/ovs-agent/api/ovsagentpbb\x06proto3"
+	"\tListFlows\x12\x1c.ovsagentpb.ListFlowsRequest\x1a\x1d.ovsagentpb.ListFlowsResponse\x12r\n" +
+	"\x17InstallStaticARPBinding\x12*.ovsagentpb.InstallStaticARPBindingRequest\x1a+.ovsagentpb.InstallStaticARPBindingResponse\x12o\n" +
+	"\x16RemoveStaticARPBinding\x12).ovsagentpb.RemoveStaticARPBindingRequest\x1a*.ovsagentpb.RemoveStaticARPBindingResponseB-Z+github.com/Sh1n3zZ/ovs-agent/api/ovsagentpbb\x06proto3"
 
 var (
 	file_api_ovsagentpb_agent_proto_rawDescOnce sync.Once
@@ -218,21 +461,30 @@ func file_api_ovsagentpb_agent_proto_rawDescGZIP() []byte {
 	return file_api_ovsagentpb_agent_proto_rawDescData
 }
 
-var file_api_ovsagentpb_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_api_ovsagentpb_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_api_ovsagentpb_agent_proto_goTypes = []any{
-	(*ListFlowsRequest)(nil),  // 0: ovsagentpb.ListFlowsRequest
-	(*Flow)(nil),              // 1: ovsagentpb.Flow
-	(*ListFlowsResponse)(nil), // 2: ovsagentpb.ListFlowsResponse
+	(*ListFlowsRequest)(nil),                // 0: ovsagentpb.ListFlowsRequest
+	(*Flow)(nil),                            // 1: ovsagentpb.Flow
+	(*ListFlowsResponse)(nil),               // 2: ovsagentpb.ListFlowsResponse
+	(*InstallStaticARPBindingRequest)(nil),  // 3: ovsagentpb.InstallStaticARPBindingRequest
+	(*InstallStaticARPBindingResponse)(nil), // 4: ovsagentpb.InstallStaticARPBindingResponse
+	(*RemoveStaticARPBindingRequest)(nil),   // 5: ovsagentpb.RemoveStaticARPBindingRequest
+	(*RemoveStaticARPBindingResponse)(nil),  // 6: ovsagentpb.RemoveStaticARPBindingResponse
 }
 var file_api_ovsagentpb_agent_proto_depIdxs = []int32{
 	1, // 0: ovsagentpb.ListFlowsResponse.flows:type_name -> ovsagentpb.Flow
-	0, // 1: ovsagentpb.OVSAgent.ListFlows:input_type -> ovsagentpb.ListFlowsRequest
-	2, // 2: ovsagentpb.OVSAgent.ListFlows:output_type -> ovsagentpb.ListFlowsResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	1, // 1: ovsagentpb.InstallStaticARPBindingResponse.flows:type_name -> ovsagentpb.Flow
+	0, // 2: ovsagentpb.OVSAgent.ListFlows:input_type -> ovsagentpb.ListFlowsRequest
+	3, // 3: ovsagentpb.OVSAgent.InstallStaticARPBinding:input_type -> ovsagentpb.InstallStaticARPBindingRequest
+	5, // 4: ovsagentpb.OVSAgent.RemoveStaticARPBinding:input_type -> ovsagentpb.RemoveStaticARPBindingRequest
+	2, // 5: ovsagentpb.OVSAgent.ListFlows:output_type -> ovsagentpb.ListFlowsResponse
+	4, // 6: ovsagentpb.OVSAgent.InstallStaticARPBinding:output_type -> ovsagentpb.InstallStaticARPBindingResponse
+	6, // 7: ovsagentpb.OVSAgent.RemoveStaticARPBinding:output_type -> ovsagentpb.RemoveStaticARPBindingResponse
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_api_ovsagentpb_agent_proto_init() }
@@ -246,7 +498,7 @@ func file_api_ovsagentpb_agent_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_ovsagentpb_agent_proto_rawDesc), len(file_api_ovsagentpb_agent_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
